@@ -1,25 +1,26 @@
-# Root terragrunt configuration
+# Infrastructure root configuration
 include "root" {
   path = find_in_parent_folders()
 }
 
+# Generate a simple local backend for testing
 terraform {
-  source = "tfr:///terraform-aws-modules/vpc/aws"
+  source = "./local-module"
 }
 
-inputs = {
-  name = "main-vpc"
-  cidr = "10.0.0.0/16"
-  
-  azs             = ["us-west-2a", "us-west-2b"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
+# Create a simple local module directory
+generate "local_module" {
+  path = "local-module"
+  if_exists = "overwrite_terragrument"
+  contents = <<EOF
+# Simple local Terraform module for testing
+resource "local_file" "example" {
+  content  = "Hello from Terragrunt!"
+  filename = "${path.module}/example.txt"
+}
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = false
-
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+output "example_content" {
+  value = local_file.example.content
+}
+EOF
 }
