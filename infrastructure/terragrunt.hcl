@@ -5,9 +5,9 @@ include "root" {
 
 # Generate the main.tf file directly in the current directory
 generate "main" {
-  path = "main.tf"
+  path      = "main.tf"
   if_exists = "overwrite"
-  contents = <<EOF
+  contents  = <<EOF
 terraform {
   backend "local" {}
 }

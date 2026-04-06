@@ -4,6 +4,6 @@ include "root" {
 }
 
 inputs = {
-  content = "Hello from Terragrunt Dev Environment!"
+  content  = "Hello from Terragrunt Dev Environment!"
   filename = "dev-example.txt"
 }
