@@ -94,3 +94,4 @@ Current versions (defined in `mise.toml`):
 ## License
 
 This project is licensed under the MIT License.
+# Test trigger
