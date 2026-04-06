@@ -11,7 +11,7 @@ terraform {
 # Create a simple local module directory
 generate "local_module" {
   path = "local-module"
-  if_exists = "overwrite_terragrunt"
+  if_exists = "overwrite"
   contents = <<EOF
 # Simple local Terraform module for testing
 resource "local_file" "example" {
