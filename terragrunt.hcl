@@ -1,21 +1,22 @@
 # Root configuration file
 remote_state {
-  backend = "s3"
+  backend = "local"
   config = {
-    encrypt        = true
-    bucket         = "terragrunt-workflow-state" # Replace with your bucket name
-    key            = "${path_relative_to_include()}/terraform.tfstate"
-    region         = "us-west-2"
-    dynamodb_table = "terragrunt-workflow-locks"  # Replace with your DynamoDB table
+    path = "${get_terragrunt_dir()}/${path_relative_to_include()}/terraform.tfstate"
   }
 }
 
 generate "provider" {
   path = "provider.tf"
-  if_exists = "overwrite_terragrument"
+  if_exists = "overwrite_terragrunt"
   contents = <<EOF
-provider "aws" {
-  region = "us-west-2"
+terraform {
+  required_providers {
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.4"
+    }
+  }
 }
 EOF
 }
