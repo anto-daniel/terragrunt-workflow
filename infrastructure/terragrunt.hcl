@@ -8,6 +8,10 @@ generate "main" {
   path = "main.tf"
   if_exists = "overwrite"
   contents = <<EOF
+terraform {
+  backend "local" {}
+}
+
 # Simple local Terraform module for testing
 resource "local_file" "example" {
   content  = "Hello from Terragrunt!"
